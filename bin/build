@@ -1,0 +1,14 @@
+mkdir -p ./build/
+
+swiftc $(find ./UV -name "*.swift") \
+  -I /usr/include/ -I ./UV/libUV/ \
+  -emit-module \
+  -module-name UV \
+  -emit-module-path ./build/UV.swiftmodule \
+  -emit-library \
+  -o ./build/libUV.dylib
+
+ swiftc \
+   -I ./build -L ./build -lUV \
+   -I /usr/include/ -I ./UV/libUV/ \
+   ./app.swift
